@@ -4,13 +4,15 @@ using System.Collections;
 namespace Algorithm.DataStructures
 {
     // Define tree nodes
-    public class TreeNode<TValue>
+    public class TreeNode<TKey, TValue> where TKey : IComparable
     {
+        public TKey key;
         public TValue value;
-        public TreeNode<TValue> left, right;
+        public TreeNode<TKey, TValue> left, right;
 
-        public TreeNode(TValue v)
+        public TreeNode(TKey k, TValue v)
         {
+            key = k;
             value = v;
             left = null;
             right = null;
@@ -18,9 +20,9 @@ namespace Algorithm.DataStructures
     }
 
 	// The Binary tree itself
-	public class BinarySearchTree<TItem>
+    public class BinarySearchTree<TKey, TValue> where TKey : IComparable
 	{
-	    private TreeNode<TItem> root;     // Points to the root of the tree
+	    private TreeNode<TKey, TValue> root;     // Points to the root of the tree
 		private int count = 0;
 
         public BinarySearchTree()
@@ -29,7 +31,7 @@ namespace Algorithm.DataStructures
 			count = 0;
 		}
 
-        private void killTree(ref TreeNode<TItem> p)
+        private void killTree(ref TreeNode<TKey, TValue> p)
         {
            if (p != null) {
              killTree (ref p.left);
@@ -54,6 +56,26 @@ namespace Algorithm.DataStructures
 			return count;
 		}      
 
+	    // Recursively locates an empty slot in the binary tree and inserts the node
+        private void add(TreeNode<TKey, TValue> node, ref TreeNode<TKey, TValue> tree)
+        {
+		  if (tree == null) 
+		     tree = node;
+		  else {
+			  // If we find a node with the same name then it's 
+			  // a duplicate and we can't continue
+			  int comparison = node.key.CompareTo(tree.key);
+			  if (comparison == 0) 
+				  throw new Exception ();
+             
+			  if (comparison < 0) { 
+                 add (node, ref tree.left);
+             } else {
+                 add (node, ref tree.right);
+             }
+   		  }
+		}
+		
 		/// <summary>
 		/// Add a symbol to the tree if it's a new one. Returns reference to the new
 		/// node if a new node inserted, else returns null to indicate node already present.
@@ -61,31 +83,11 @@ namespace Algorithm.DataStructures
 		/// <param name="v">Value of node</param>
 		/// <returns> Returns reference to the new node is the node was inserted.
 		/// If a duplicate node (same name was located then returns null</returns>
-        public TreeNode<TItem> insert(TItem v)
+        public TreeNode<TKey, TValue> Insert(TKey k, TValue v)
         {
-            TreeNode<TItem> node = new TreeNode<TItem>(v);
+            TreeNode<TKey, TValue> node = new TreeNode<TKey, TValue>(k, v);
 			try {
-                if (root == null)
-                {
-                    root = node;
-                }
-                else
-                {
-                    // If we find a node with the same name then it's 
-                    // a duplicate and we can't continue
-                    int comparison = String.Compare(node.name, tree.name);
-                    if (comparison == 0)
-                        throw new Exception();
-
-                    if (comparison < 0)
-                    {
-                        add(node, ref tree.left);
-                    }
-                    else
-                    {
-                        add(node, ref tree.right);
-                    }
-                }
+                add(node, ref root);
 				count++;
 				return node;
 			} catch (Exception) {
@@ -93,14 +95,15 @@ namespace Algorithm.DataStructures
 			}
 		}
 
-		// Searches for a node with name key, name. If found it returns a reference
+		// Searches for a node with key. If found it returns a reference
 		// to the node and to thenodes parent. Else returns null.
-		private TreeNode findParent (string name, ref TreeNode parent) {
-			TreeNode np = root;
+        private TreeNode<TKey, TValue> findParent(TKey key, ref TreeNode<TKey, TValue> parent)
+        {
+            TreeNode<TKey, TValue> np = root;
 			parent = null;
 			int cmp;
 			while (np != null) {
-				cmp = String.Compare (name, np.name);
+                cmp = key.CompareTo(np.key);
 				if (cmp == 0)   // found !
 					return np;
 
@@ -124,7 +127,8 @@ namespace Algorithm.DataStructures
 		/// <param name="startNode">Name key to use for searching</param>
 		/// <param name="parent">Returns the parent node if search successful</param>
 		/// <returns>Returns a reference to the node if successful, else null</returns>
-		public TreeNode findSuccessor (TreeNode startNode, ref TreeNode parent) {
+        public TreeNode<TKey, TValue> FindSuccessor(TreeNode<TKey, TValue> startNode, ref TreeNode<TKey, TValue> parent)
+        {
 			parent = startNode;
 			// Look for the left-most node on the right side
 			startNode = startNode.right; 
@@ -147,10 +151,10 @@ namespace Algorithm.DataStructures
 		/// to locate the node for deletion.
 		/// </summary>
 		/// <param name="key">Name key of node to delete</param>
-		public void delete (string key) {
-			TreeNode parent = null;
+		public void Delete (string key) {
+            TreeNode<TKey, TValue> parent = null;
 			// First find the node to delete and its parent
-			TreeNode nodeToDelete = findParent (key, ref parent);
+            TreeNode<TKey, TValue> nodeToDelete = findParent(key, ref parent);
 			if (nodeToDelete == null) 
 				throw new Exception ("Unable to delete node: " + key.ToString());  // can't find node, then say so 
 			
@@ -214,9 +218,9 @@ namespace Algorithm.DataStructures
 			// Both children have nodes, therefore find the successor, 
 			// replace deleted node with successor and remove successor
 			// The parent argument becomes the parent of the successor
-			TreeNode successor = findSuccessor (nodeToDelete, ref parent);
+            TreeNode<TKey, TValue> successor = FindSuccessor(nodeToDelete, ref parent);
 			// Make a copy of the successor node
-			TreeNode tmp = new TreeNode (successor.name, successor.value);
+            TreeNode<TKey, TValue> tmp = new TreeNode<TKey, TValue>(successor.name, successor.value);
 			// Find out which side the successor parent is pointing to the
 			// successor and remove the successor
 			if (parent.left == successor)
@@ -232,7 +236,8 @@ namespace Algorithm.DataStructures
 
 
 		// Simple 'drawing' routines
-		private string drawNode (TreeNode node) {
+        private string drawNode(TreeNode<TKey, TValue> node)
+        {
 			if (node == null)
 				return "empty";
 
