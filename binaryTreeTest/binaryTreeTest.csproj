@@ -67,10 +67,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BinaryTree">
-      <Name>BinaryTree</Name>
-      <HintPath>..\BinaryTree\bin\Debug\BinaryTree.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -89,6 +85,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryTree\Algorithm.csproj">
+      <Project>{b75fa392-6e8e-47e0-8606-dc844e462c0d}</Project>
+      <Name>Algorithm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

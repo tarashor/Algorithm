@@ -1,8 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryTree", "BinaryTree\BinaryTree.csproj", "{B75FA392-6E8E-47E0-8606-DC844E462C0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "BinaryTree\Algorithm.csproj", "{B75FA392-6E8E-47E0-8606-DC844E462C0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "binaryTreeTest", "binaryTreeTest\binaryTreeTest.csproj", "{4564FA32-6AE8-42FD-98EA-F3979F8F46D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmTest", "AlgorithmTest\AlgorithmTest.csproj", "{49CA806D-53BD-47B4-BAE0-69E54FD22750}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,10 @@ Global
 		{4564FA32-6AE8-42FD-98EA-F3979F8F46D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4564FA32-6AE8-42FD-98EA-F3979F8F46D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4564FA32-6AE8-42FD-98EA-F3979F8F46D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CA806D-53BD-47B4-BAE0-69E54FD22750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CA806D-53BD-47B4-BAE0-69E54FD22750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CA806D-53BD-47B4-BAE0-69E54FD22750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CA806D-53BD-47B4-BAE0-69E54FD22750}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

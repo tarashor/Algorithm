@@ -1,10 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
-using SysBio.dataStructures;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections;
+using Algorithm.DataStructures;
 
 // Test code
 // Test performance and delete method
@@ -111,7 +111,7 @@ namespace binaryTreeTest
 			Console.WriteLine ("Start Tests");
 			PerformanceTimer pt = new PerformanceTimer();
 			Random random = new Random();
-			TBinarySTree bt;
+			BinarySearchTree<string, int> bt;
 			Hashtable ht;
 
 			int[] dataSizeArray = new int[22] { 1000, 5000, 10000, 20000, 30000,
@@ -144,9 +144,9 @@ namespace binaryTreeTest
 					double[] timeHt = new double[trials];
  
 					// Insert data into binary search tree
-					bt = new TBinarySTree();
+					bt = new BinarySearchTree<string, int>();
 					for (int i=0; i<dataSizeArray[nn]; i++)
-						bt.insert (values[i], i);
+						bt.Insert (values[i], i);
 
 					// Insert data into hash table
 					ht = new Hashtable();
@@ -172,7 +172,8 @@ namespace binaryTreeTest
 						// Binary Search Tree
 						index = random.Next (dataSizeArray[nn]);
 						pt.Start();
-						bt.findSymbol (values[index]);
+                        TreeNode<string, int> parent;
+						bt.Search(values[index], out parent);
 						pt.Stop();
 						timeBt[k] = pt.DurationSeconds;
 					

@@ -1,9 +1,11 @@
-using System;
-using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Algorithm.DataStructures
+namespace AlgorithmTest
 {
-    // Define tree nodes
     public class TreeNode<TKey, TValue> where TKey : IComparable
     {
         public TKey key;
@@ -304,8 +306,108 @@ namespace Algorithm.DataStructures
             return node.key.ToString() + " " + save(node.left) + " " + save(node.right);
         }
 
+        Dictionary<TreeNode<TKey, TValue>, int> d = new Dictionary<TreeNode<TKey, TValue>, int>();
+
+        public Dictionary<TreeNode<TKey, TValue>, int> GetHeights() {
+            d = new Dictionary<TreeNode<TKey, TValue>, int>();
+            setHeights(root, 1);
+            return d;
+        }
+
+        private void setHeights(TreeNode<TKey, TValue> node, int level)
+        {
+            if (node == null) return;
+            if (node.left == null && node.right == null)
+            {
+                d.Add(node, level);
+            }
+            else 
+            {
+                setHeights(node.left, level + 1);
+                setHeights(node.right, level + 1);
+            }
+        }
+
 
     }
 
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int maxWidth = 0;
+            BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+            string s;
+            while ((s = System.Console.ReadLine().Trim()) != null)
+            {
+                if (s!="TERM"){
+                    int item = int.Parse(s);
+                    tree.Insert(item, item);
+                }
+            }
 
+            Dictionary<TreeNode<int, int>, int> heights = tree.GetHeights();
+
+            int maxH = 0;
+            TreeNode<int, int> maxLeaf = null;
+            foreach (TreeNode<int, int> leaf in heights.Keys) {
+                int h = heights[leaf];
+                if (maxH < h) 
+                {
+                    maxH = h;
+                    maxLeaf = leaf;
+                }
+            }
+
+            maxWidth = maxH;
+            heights.Remove(maxLeaf);
+
+            maxH = 0;
+            maxLeaf = null;
+            foreach (TreeNode<int, int> leaf in heights.Keys)
+            {
+                int h = heights[leaf];
+                if (maxH < h)
+                {
+                    maxH = h;
+                    maxLeaf = leaf;
+                }
+            }
+            maxWidth += maxH;
+
+            Console.WriteLine(maxWidth);
+
+
+            /*BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+            tree.Insert(15, 15);
+            tree.Insert(5, 5);
+            tree.Insert(3, 3);
+            tree.Insert(12, 12);
+            tree.Insert(10, 10);
+            tree.Insert(6, 6);
+            tree.Insert(7, 7);
+            tree.Insert(13, 13);
+            tree.Insert(16, 16);
+            tree.Insert(20, 20);
+            tree.Insert(18, 18);
+            tree.Insert(23, 23);
+            Console.WriteLine(tree.DrawTree());
+            string t = tree.Save();
+            tree.Clear();
+            string[] s = t.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < s.Length; i++) 
+            { 
+                int k = int.Parse(s[i]);
+                tree.Insert(k, k);
+            }
+
+            Console.WriteLine(tree.DrawTree());
+            
+            Console.Read();
+            */
+
+            
+
+        }
+    }
 }
