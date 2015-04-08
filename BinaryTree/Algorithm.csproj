@@ -81,9 +81,10 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BinarySearchTree.cs">
+    <Compile Include="DataStructures\BinarySearchTree.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sorting\Sorting.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
