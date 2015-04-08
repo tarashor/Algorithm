@@ -1,10 +1,5 @@
 ﻿using Algorithm.DataStructures;
-using Algorithm.Sorting;
 using System;
-using System.Linq;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections.Generic;
 
 namespace AlgorithmTest
 {
