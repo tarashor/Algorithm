@@ -46,14 +46,7 @@ namespace AlgorithmTest
 
         public static void TestSortingOctave()
         {
-            var methods = typeof(Sorting).GetMethods().Where(m => m.Name.Contains("Sort")).Select(m => m.MakeGenericMethod(typeof(int)));
-            Action<int[]>[] sortingAlgos = new Action<int[]>[methods.Count()];
-            int k = 0;
-            foreach (MethodInfo method in methods)
-            {
-                sortingAlgos[k] = (Action<int[]>)Delegate.CreateDelegate(typeof(Action<int[]>), method);
-                k++;
-            }
+            Action<int[]>[] sortingAlgos = GetListOfSortAlgorithms();
 
             int N = 10;
             for (int i = 0; i < sortingAlgos.Length; i++)
@@ -87,6 +80,19 @@ namespace AlgorithmTest
 
             Console.WriteLine("----------Finished!---------");
             Console.Read();
+        }
+
+        private static Action<int[]>[] GetListOfSortAlgorithms()
+        {
+            var methods = typeof(Sorting).GetMethods().Where(m => m.Name.Contains("Sort")).Select(m => m.MakeGenericMethod(typeof(int)));
+            Action<int[]>[] sortingAlgos = new Action<int[]>[methods.Count()];
+            int k = 0;
+            foreach (MethodInfo method in methods)
+            {
+                sortingAlgos[k] = (Action<int[]>)Delegate.CreateDelegate(typeof(Action<int[]>), method);
+                k++;
+            }
+            return sortingAlgos;
         }
 
         private static void saveToMFile(List<int> x, List<long>[] y, string[] legends)
