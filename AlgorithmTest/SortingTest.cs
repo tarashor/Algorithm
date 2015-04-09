@@ -10,43 +10,17 @@ namespace AlgorithmTest
 {
     class SortingTest
     {
-        public static void testSorting()
-        {
-            var methods = typeof(Sorting).GetMethods().Where(m => m.Name.Contains("Sort")).Select(m => m.MakeGenericMethod(typeof(int)));
-            Action<int[]>[] sortingAlgos = new Action<int[]>[methods.Count()];
-            int k = 0;
-            foreach (MethodInfo method in methods)
-            {
-                sortingAlgos[k] = (Action<int[]>)Delegate.CreateDelegate(typeof(Action<int[]>), method);
-                k++;
-            }
-
+        public static void TestOneMethod() {
             int N = 10;
-            for (int i = 0; i < sortingAlgos.Length; i++)
-            {
-                testOneSortMethod(N, sortingAlgos[i]);
-            }
-
-            Console.WriteLine("------------NORMAL----------");
-
-            List<int> x = new List<int>();
-            List<int>[] y = new List<int>[sortingAlgos.Length];
-            N = 100000;
-            for (int j = 100; j < N; j += 1000)
-            {
-                Console.WriteLine("Count = {0}", j);
-                for (int i = 0; i < sortingAlgos.Length; i++)
-                {
-                    testOneSortMethod(j, sortingAlgos[i]);
-                }
-            }
-            Console.WriteLine("----------Finished!---------");
-            Console.Read();
+            int[] collection = Utils.GenerateIntArray(N);
+            Utils.PrintArray(collection, Console.Out);
+            Sorting.ShellSort(collection);
+            Utils.PrintArray(collection, Console.Out);
         }
 
         public static void TestSortingOctave()
         {
-            Action<int[]>[] sortingAlgos = GetListOfSortAlgorithms();
+            Action<int[]>[] sortingAlgos = getListOfSortAlgorithms();
 
             int N = 10;
             for (int i = 0; i < sortingAlgos.Length; i++)
@@ -54,35 +28,53 @@ namespace AlgorithmTest
                 testOneSortMethod(N, sortingAlgos[i]);
             }
 
-            Console.WriteLine("------------NORMAL----------");
+            int maxLengthOfCollection = 100000;
+            int numberOfData = 20;
 
-            N = 100000;
-            int delta = 1000;
-            List<int> x = new List<int>();
-            List<long>[] y = new List<long>[sortingAlgos.Length];
+            int[] x;
+            long[][] y;
+            getPerformenceData(sortingAlgos, maxLengthOfCollection, numberOfData, out x, out y);
+            string[] legends = getAlgorithmsNames(sortingAlgos);
+            
+            Utils.SaveToMFile(x, y, legends, "s4.m");
+
+            Console.WriteLine("Finished!");
+            Console.Read();
+        }
+
+        private static string[] getAlgorithmsNames(Action<int[]>[] sortingAlgos)
+        {
             string[] legends = new string[sortingAlgos.Length];
-            for (int j = delta; j < N; j += delta)
-            {
-                x.Add(j);
-                for (int i = 0; i < sortingAlgos.Length; i++)
-                {
-                    if (y[i] == null) y[i] = new List<long>();
-                    y[i].Add(testOneSortMethod(j, sortingAlgos[i]));
-                }
-            }
-
             for (int i = 0; i < sortingAlgos.Length; i++)
             {
                 legends[i] = sortingAlgos[i].Method.Name;
             }
-
-            saveToMFile(x,y, legends);
-
-            Console.WriteLine("----------Finished!---------");
-            Console.Read();
+            return legends;
         }
 
-        private static Action<int[]>[] GetListOfSortAlgorithms()
+        private static void getPerformenceData(Action<int[]>[] sortingAlgos, int maxLengthOfCollection, int numberOfData, out int[] x, out long[][] y)
+        {
+            int delta = maxLengthOfCollection / numberOfData;
+            int currentLength = delta;
+
+            x = new int[numberOfData];
+            y = new long[sortingAlgos.Length][];
+            for (int j = 0; j < numberOfData; j++)
+            {
+                x[j] = currentLength;
+                for (int i = 0; i < sortingAlgos.Length; i++)
+                {
+                    if (y[i] == null)
+                    {
+                        y[i] = new long[numberOfData];
+                    }
+                    y[i][j] = testOneSortMethod(currentLength, sortingAlgos[i]);
+                }
+                currentLength += delta;
+            }
+        }
+
+        private static Action<int[]>[] getListOfSortAlgorithms()
         {
             var methods = typeof(Sorting).GetMethods().Where(m => m.Name.Contains("Sort")).Select(m => m.MakeGenericMethod(typeof(int)));
             Action<int[]>[] sortingAlgos = new Action<int[]>[methods.Count()];
@@ -95,66 +87,13 @@ namespace AlgorithmTest
             return sortingAlgos;
         }
 
-        private static void saveToMFile(List<int> x, List<long>[] y, string[] legends)
-        {
-            using (StreamWriter sw = new StreamWriter("s.m")) {
-                string xline = "x=[";
-                for (int i = 0; i < x.Count; i++) {
-                    xline += x[i].ToString() + " ";
-                }
-                xline += "];";
-                sw.WriteLine(xline);
-
-                for (int j = 0; j < y.Length; j++)
-                {
-                    string yline = string.Format("y{0}=[", j);
-                    for (int i = 0; i < x.Count; i++)
-                    {
-                        yline += y[j][i].ToString() + " ";
-                    }
-                    yline += "];";
-                    sw.WriteLine(yline);
-                }
-                string hline = "h=plot(";
-                for (int j = 0; j < y.Length; j++)
-                {
-                    hline += string.Format("y{0}, x", j);
-                    if (j < y.Length - 1) {
-                        hline += ",";
-                    }
-                }
-                hline += ");";
-
-                sw.WriteLine(hline);
-
-                string legendsline = "legend(";
-                for (int j = 0; j < legends.Length; j++)
-                {
-                    legendsline += string.Format("'{0}'", legends[j]);
-                    if (j < legends.Length - 1)
-                    {
-                        legendsline += ",";
-                    }
-                }
-                legendsline += ");";
-                sw.WriteLine(legendsline);
-            }
-        }
-
         private static long testOneSortMethod(int length, Action<int[]> sort)
         {
             int[] collection = Utils.GenerateIntArray(length);
-            //Utils.PrintArray(collection, Console.Out);
             var watch = Stopwatch.StartNew();
-
             sort(collection);
-
             watch.Stop();
             return watch.ElapsedMilliseconds;
-            //Utils.PrintArray(collection, Console.Out);
-            //Console.WriteLine("Method{0}, Time={1}ms", sort.Method.Name, elapsedMs);
-
         }
-
     }
 }

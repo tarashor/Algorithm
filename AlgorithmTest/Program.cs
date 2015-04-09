@@ -8,6 +8,8 @@ namespace AlgorithmTest
         static void Main(string[] args)
         {
             SortingTest.TestSortingOctave();
+            //SortingTest.TestOneMethod();
+            
         }
 
         private static void testBinaryTree()
