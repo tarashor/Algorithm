@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllPairsShortestPath", "AllPairsShortestPath\AllPairsShortestPath.csproj", "{B88757E2-128E-4838-88CE-E5EAF3673259}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructures", "DataStructures\DataStructures.csproj", "{77893CF6-7253-4ECA-97D0-43F83E14FAFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimumSpanningTree", "MinimumSpanningTree\MinimumSpanningTree.csproj", "{C70AE313-2B51-4DD6-B690-49E6D2DFDA50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravellingSalesmanProblem", "TravellingSalesmanProblem\TravellingSalesmanProblem.csproj", "{31E2B4D2-E02D-43EA-A8AC-B8989C843B3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusteringProblem", "ClusteringProblem\ClusteringProblem.csproj", "{E27031E8-6A79-433F-87B9-31925F40B576}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAT2Problem", "SAT2Problem\SAT2Problem.csproj", "{FA682DC7-DA00-4CF4-BE10-CF1F77225D43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B88757E2-128E-4838-88CE-E5EAF3673259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B88757E2-128E-4838-88CE-E5EAF3673259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B88757E2-128E-4838-88CE-E5EAF3673259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B88757E2-128E-4838-88CE-E5EAF3673259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77893CF6-7253-4ECA-97D0-43F83E14FAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77893CF6-7253-4ECA-97D0-43F83E14FAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77893CF6-7253-4ECA-97D0-43F83E14FAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77893CF6-7253-4ECA-97D0-43F83E14FAFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70AE313-2B51-4DD6-B690-49E6D2DFDA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70AE313-2B51-4DD6-B690-49E6D2DFDA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70AE313-2B51-4DD6-B690-49E6D2DFDA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70AE313-2B51-4DD6-B690-49E6D2DFDA50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E2B4D2-E02D-43EA-A8AC-B8989C843B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E2B4D2-E02D-43EA-A8AC-B8989C843B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E2B4D2-E02D-43EA-A8AC-B8989C843B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E2B4D2-E02D-43EA-A8AC-B8989C843B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E27031E8-6A79-433F-87B9-31925F40B576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27031E8-6A79-433F-87B9-31925F40B576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27031E8-6A79-433F-87B9-31925F40B576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27031E8-6A79-433F-87B9-31925F40B576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA682DC7-DA00-4CF4-BE10-CF1F77225D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA682DC7-DA00-4CF4-BE10-CF1F77225D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA682DC7-DA00-4CF4-BE10-CF1F77225D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA682DC7-DA00-4CF4-BE10-CF1F77225D43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
